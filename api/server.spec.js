@@ -14,5 +14,20 @@ describe('server.js', () => {
         })
     })
 
+    describe('Get/api/games', () => {
+        it('should retrieve a list of all games', async () => {
+            const res = await request(server).get('/api/games')
+            expect(res.status).toBe(200)
+            expect(res.type).toBe('application/json') 
+            expect(res.body).toHaveLength(3)
+        })
+        
+        //clear db to test this
+        xit('should return [] if empty', async () => {
+            const res = await request(server).get('/api/games')
+            expect(res.body).toEqual([])
+        })
+    })
+
 
 })
