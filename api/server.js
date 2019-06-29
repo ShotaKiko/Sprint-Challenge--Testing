@@ -17,4 +17,15 @@ server.get('/api/games', async(req, res) => {
     }
 })
 
+server.post('/api/games', async (req, res) => {
+    const newGame = req.body
+
+    try{
+        const addedGame = await Games.addGame(newGame)
+        res.status(201).json(addedGame)
+    } catch(err) {
+        res.status(500).json({ message:"The guest could not be added." })
+    }
+})
+
 module.exports = server
