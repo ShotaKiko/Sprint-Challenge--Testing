@@ -17,14 +17,17 @@ server.get('/api/games', async(req, res) => {
     }
 })
 
-server.post('/api/games', async (req, res) => {
-    const newGame = req.body
-
-    try{
-        const addedGame = await Games.addGame(newGame)
-        res.status(201).json(addedGame)
-    } catch(err) {
-        res.status(500).json({ message:"The guest could not be added." })
+server.post('/api/games', async(req, res) => {
+   const newGame = req.body
+    if(req.body.title && req.body.genre){
+        try{
+            await Games.addGame(newGame)
+            res.status(201).json({message:`${req.body.title} has been added to the list.` })            
+        } catch(err) {
+            res.status(500).json({ message:"Error adding game." })
+        }
+    } else{
+        res.status(422).json({ message:"missing info" })
     }
 })
 
