@@ -31,4 +31,23 @@ server.post('/api/games', async(req, res) => {
     }
 })
 
+server.delete('/api/games/:id', async(req, res) => {
+    try{
+        const removedGame = await Games.removeGame(req.params.id)
+        if(removedGame > 0){
+        res.status(202).json({
+            message:"Guest has checked out"
+        })
+    } else {
+        res.status(404).json({
+            message:"The guest with the specified id does not exist"
+        })
+    }
+    } catch (error) {
+        res.status(500).json({
+            message:"Unable to remove"
+        })
+    }
+})
+
 module.exports = server

@@ -16,6 +16,6 @@ async function addGame(newGame) {
 }
 
 //Stretch
-async function removeGame() {
-    return null
+async function removeGame(id) {
+    return await db('games').where({ id }).del()
 }

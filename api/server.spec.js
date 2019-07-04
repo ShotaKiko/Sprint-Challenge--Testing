@@ -18,14 +18,13 @@ describe('server.js', () => {
         afterEach( async () => {
             await db('games').truncate()
         })
-
-        it('should retrieve a list of all games', async () => {
-            const newGame = {
+        xit('should retrieve a list of all games', async () => {
+            const newGame9 = {
                 title:"Monster Hunter World",
                 genre:"JRPG?",
                 releaseYear:2018
             }
-            await db('games').insert(newGame)
+            await db('games').insert(newGame9)
             
             const res = await request(server).get('/api/games')
             expect(res.status).toBe(200)
@@ -40,6 +39,8 @@ describe('server.js', () => {
         it('should return [] if empty', async () => {
             const res = await request(server).get('/api/games')
             expect(res.body).toEqual([])
+            expect(res.status).toBe(200)
+            expect(res.type).toBe('application/json') 
         })
     })
 
@@ -73,6 +74,22 @@ describe('server.js', () => {
             expect(res.status).toBe(422)
 
         },)
+    })
+
+    describe('DELEte /api/games', () => {
+        it('should delete game', async() => {
+            const newGame = {
+                title: "Marvel's Spider-man",
+                genre: "Action",
+                releaseYear: 2019
+            }
+            await db('games').insert(newGame)
+            const gamesList = await db('games')
+            expect(gamesList).toHaveLength(1)
+            
+            const res = await request(server).del(`/api/games/${1}`)
+            expect(res.status).toBe(202)
+        })
     })
 
 
