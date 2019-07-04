@@ -36,11 +36,11 @@ server.delete('/api/games/:id', async(req, res) => {
         const removedGame = await Games.removeGame(req.params.id)
         if(removedGame > 0){
         res.status(202).json({
-            message:"Guest has checked out"
+            message:"game removed"
         })
     } else {
         res.status(404).json({
-            message:"The guest with the specified id does not exist"
+            message:"The game with the specified id does not exist"
         })
     }
     } catch (error) {
